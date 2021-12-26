@@ -1,2 +1,2 @@
 # pp
-All things I've done in Poznań University of Technology.
+All things I've done at Poznań University of Technology.

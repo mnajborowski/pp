@@ -1,0 +1,53 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Sockets;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ThreadPool.QueueUserWorkItem(ThreadProc1);
+            ThreadPool.QueueUserWorkItem(ThreadProc2, "Client1");
+            ThreadPool.QueueUserWorkItem(ThreadProc2, "Client2");
+            Thread.Sleep(3000);
+        }
+        static void ThreadProc1(Object state)
+        {
+            TcpListener server = new TcpListener(IPAddress.Any, 2048);
+            server.Start();
+            while (true)
+            {
+                TcpClient client = server.AcceptTcpClient();
+                byte[] buffer = new byte[1024];
+                while (true)
+                {
+                    int length = client.GetStream().Read(buffer, 0, 1024);
+                    client.GetStream().Write(buffer, 0, length);
+                    Console.WriteLine("Klient napisal: " + ASCIIEncoding.ASCII.GetString(buffer, 0, length));
+                }
+            }
+        }
+
+        static void ThreadProc2(Object state)
+        {
+            TcpClient client = new TcpClient();
+            client.Connect(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 2048));
+            var mes = (string)state;
+            byte[] message = new ASCIIEncoding().GetBytes((string)mes);
+            client.GetStream().Write(message, 0, message.Length);
+            int length = client.GetStream().Read(message, 0, message.Length);
+            string recieved = ASCIIEncoding.ASCII.GetString(message).Substring(0, length);
+            Console.WriteLine("Serwer napisal: " + recieved);
+        }
+    }
+}
+
+
+Problemem takiego rozwi¹zania jest tak, ¿e serwer jest w stanie obs³u¿yæ tylko jednego klienta, przez co wiadomoœci wysy³ane i obierane przez losowych klientów.

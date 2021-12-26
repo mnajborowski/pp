@@ -1,0 +1,29 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace ConsoleApp1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ThreadPool.QueueUserWorkItem(ThreadProc, new object[] { 500 });
+            ThreadPool.QueueUserWorkItem(ThreadProc, new object[] { 1000 });
+            Thread.Sleep(2000);
+        }
+
+        private static void ThreadProc(object stateInfo)
+        {
+            var time = (int)((object[])stateInfo)[0];
+            Thread.Sleep(time);
+            Console.WriteLine("Czekalem " + time + " ms");
+        }
+    }
+}
+
+
+Wnioskiem jest fakt, ¿e w¹tek g³ówny nie czeka na zakoñczenie watków pobocznych, przez co nale¿y ustawiæ mu odpowiednio d³ugi czas oczekiwania, ¿eby pozosta³e w¹tki zakoñczy³ swoje dzia³anie.

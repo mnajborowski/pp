@@ -1,0 +1,4 @@
+Encrypted message:
+OXOSFXKDYCFWHLFSOSLDFWHL
+Decrypted message:
+SZLADZIEWECZKADOLASECZKA

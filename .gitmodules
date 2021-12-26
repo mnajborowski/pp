@@ -1,0 +1,6 @@
+[submodule "semestr-7/pw/elixir-sports-equipment-rental"]
+	path = semestr-7/pw/elixir-sports-equipment-rental
+	url = https://github.com/mnajborowski/elixir-sports-equipment-rental
+[submodule "semestr-5/io/lab/pgm-images"]
+	path = semestr-5/io/lab/pgm-images
+	url = https://github.com/mnajborowski/pgm-images

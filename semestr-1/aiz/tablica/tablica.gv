@@ -1,0 +1,6 @@
+digraph structs {
+label="Tablica";
+rankdir=LR;
+node [shape=record];
+tab [label="0|1|8|5|5"];
+}
